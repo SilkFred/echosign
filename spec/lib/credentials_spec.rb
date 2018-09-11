@@ -16,4 +16,17 @@ describe Echosign::Credentials do
         end
       end
   end
+
+  describe '#refresh_access_token' do
+      it 'refreshes the access_token' do
+        VCR.use_cassette('refresh_token', :record => :once) do
+          redirect_uri = 'https://onecase.herokuapp.com/oauth/callback'
+          refresh_token = '3AAABLblqZhDNQqnU2wkIXrJlCt7KUzm-Cq9CZayRLq6WLotyDZO25XyrD49Y8PkqwoLxKAejvJM*'
+
+          credentials = Echosign::Credentials.new(app_id, app_secret)
+          token = credentials.refresh_access_token(refresh_token)
+          expect(token).to_not be_nil
+        end
+      end
+  end
 end
