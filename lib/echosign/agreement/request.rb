@@ -11,9 +11,7 @@ module Echosign::Request
     headers = { 'Access-Token' => token }
     headers.merge!('X-User-Id' => user_id) unless user_id.nil?
     headers.merge!('X-User-Email' => user_email) unless user_email.nil?
-    headers.merge!('Content-Type' => "application/json")
-    response = HTTParty.post(ENDPOINT.fetch(:agreement), :body => body.to_json,
-    :headers => headers)
+    response = post(ENDPOINT.fetch(:agreement), body, headers, json:true)
     JSON.parse(response.body)
   end
 
@@ -52,7 +50,7 @@ module Echosign::Request
   end
 
   # Gets a single combined PDF document for the documents associated with an agreement.
-  # 
+  #
   # @param token [String] Auth Token
   # @param agreement_id [String] ID of agreement to retrieve info on.
   # @return [String] Raw bytes from document file
@@ -64,10 +62,11 @@ module Echosign::Request
     endpoint << add_query(endpoint, "attachSupportingDocuments=#{attachSupportingDocuments}")
     endpoint << add_query(endpoint, "auditReport=#{auditReport}")
     response = get(endpoint, headers)
+    response.body
   end
 
   # Retrieves data entered by the user into interactive form fields at the time they signed the agreement
-  # 
+  #
   # @param token [String] Auth Token
   # @param agreement_id [String]  (REQUIRED)
   # @return [String] Raw bytes representing CSV file
@@ -86,6 +85,7 @@ module Echosign::Request
     headers = { 'Access-Token' => token }
     endpoint = "#{ENDPOINT.fetch(:agreement)}/#{agreement_id}/documents/#{document_id}"
     response = get(endpoint, headers)
+    response.body
   end
 
   # Performs REST GET /agreement/:id/auditTrail operation
@@ -97,6 +97,7 @@ module Echosign::Request
     headers = { 'Access-Token' => token }
     endpoint = "#{ENDPOINT.fetch(:agreement)}/#{agreement_id}/auditTrail"
     response = get(endpoint, headers)
+    response.body
   end
 
   # Performs REST GET /agreement/:id/documents
@@ -130,8 +131,8 @@ module Echosign::Request
     begin
       response = HTTParty.put(
         endpoint, 
-        request_body.to_json,
-        headers
+        query: request_body.to_json,
+        headers: headers
       )
     rescue Exception => error
       raise_error(error)
