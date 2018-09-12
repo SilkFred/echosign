@@ -29,4 +29,20 @@ describe Echosign::Credentials do
         end
       end
   end
+
+  describe '#revoke_token' do
+      it 'revokes the access_token' do
+        VCR.use_cassette('revoke_token', :record => :once) do
+          access_token = '3AAABLblqZhDiWJJmHDF1Ssgkc2giXTvXZ_-s5gNKdz2UTENxXNBsyT7FMCf8igzXtgVVTBW4hvn44xRx3zE4IVby2JuKIlix'
+
+          credentials = Echosign::Credentials.new(app_id, app_secret)
+
+          credentials.instance_variable_set(:@access_token, access_token) # sneaky!
+          expect(credentials.access_token).to_not be_nil
+
+          credentials.revoke_token
+          expect(credentials.access_token).to be_nil
+        end
+      end
+  end
 end
