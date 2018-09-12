@@ -878,7 +878,7 @@ they signed the widget.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">- (Echosign::Client) <strong>initialize</strong>(credentials) </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (Echochamber::Client) <strong>initialize</strong>(token) </a>
     
 
     
@@ -1152,7 +1152,7 @@ mega_sign.</p>
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    - (<tt><span class='object_link'><a href="" title="Echosign::Client (class)">Echosign::Client</a></span></tt>) <strong>initialize</strong>(credentials) 
+    - (<tt>Echochamber::Client</tt>) <strong>initialize</strong>(token) 
   
 
   
@@ -1172,16 +1172,16 @@ mega_sign.</p>
   
     <li>
       
-        <span class='name'>credentials</span>
+        <span class='name'>token</span>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="Credentials.html" title="Echosign::Credentials (class)">Echosign::Credentials</a></span></tt>)</span>
+        <span class='type'>(<tt>String</tt>)</span>
       
       
       
         &mdash;
         <div class='inline'>
-<p>Initialized Echosign::Credentials</p>
+<p>Access token or integration key</p>
 </div>
       
     </li>
@@ -1202,8 +1202,8 @@ mega_sign.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/echosign/client.rb', line 15</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_credentials'>credentials</span><span class='rparen'>)</span>
-  <span class='ivar'>@token</span> <span class='op'>=</span> <span class='const'>Echosign</span><span class='op'>::</span><span class='const'>Request</span><span class='period'>.</span><span class='id identifier rubyid_get_token'>get_token</span><span class='lparen'>(</span><span class='id identifier rubyid_credentials'>credentials</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_token'>token</span><span class='rparen'>)</span>
+  <span class='ivar'>@token</span> <span class='op'>=</span> <span class='id identifier rubyid_token'>token</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -5370,7 +5370,7 @@ mega_sign</p>
 </div>
 
     <div id="footer">
-  Generated on Tue Sep 11 11:11:41 2018 by
+  Generated on Wed Sep 12 11:10:39 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.4 (ruby-2.6.0).
 </div>
