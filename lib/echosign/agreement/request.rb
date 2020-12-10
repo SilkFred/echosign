@@ -124,14 +124,14 @@ module Echosign::Request
   # @param request_body [Hash] Hash for Agreement status update
   # @return [Hash] Agreements response body
   def self.update_agreement_status(token, agreement_id, request_body)
-    headers = { 'Access-Token' => token }
+    headers = { 'Access-Token' => token, 'Content-Type' => 'application/json' }
     endpoint = "#{ENDPOINT.fetch(:agreement)}/#{agreement_id}/status"
 
     begin
       response = HTTParty.put(
         endpoint, 
-        request_body.to_json,
-        headers
+        :body => request_body.to_json,
+        :headers => headers
       )
     rescue Exception => error
       raise_error(error)
